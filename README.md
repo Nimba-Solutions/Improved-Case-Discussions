@@ -7,15 +7,19 @@ This project aims to provide a lightweight improvement over Salesforce's standar
 - **Full Rich Text Support**
   - Includes file upload and preview.
 
+
+
 - **Internal-Only Comment Support**
+![{F70A16D6-964D-4947-A536-39F41057B9CD}](https://github.com/user-attachments/assets/353ea2e7-899a-4b60-abb6-d372165ccaaa)
   - Allows for internal team comments not visible to external users.
- ![{F70A16D6-964D-4947-A536-39F41057B9CD}](https://github.com/user-attachments/assets/353ea2e7-899a-4b60-abb6-d372165ccaaa)
+
 
 - **In-Line Case Team Management**
+![{EABF21E5-6EB4-417E-9BF3-69D9EE6E7C3E}](https://github.com/user-attachments/assets/fba69b27-6bb3-47e8-8f3c-9ef5a8f876ea)
   - **Role-Based Controls for Collaborators**
     - Streamlined interface for searching and adding Case Team Members & Roles
     - If no Case Roles are defined in the org, a default role "Collaborator" is created.
-![{EABF21E5-6EB4-417E-9BF3-69D9EE6E7C3E}](https://github.com/user-attachments/assets/fba69b27-6bb3-47e8-8f3c-9ef5a8f876ea)
+
 
 - **In-Line CaseCollaborator__c Management**
     - Streamlined interface for searching and adding multiple contacts to a Case
