@@ -1,0 +1,44 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-horizontal_medium">
+            <lightning-input
+                type="search"
+                label="Search Contacts"
+                value={searchTerm}
+                onchange={handleSearchChange}
+                placeholder="Search contacts to add as collaborators...">
+            </lightning-input>
+
+            <div if:true={showContactList} class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                <ul class="slds-listbox slds-listbox_vertical">
+                    <template for:each={contactResults} for:item="contact">
+                        <li key={contact.Id} class="slds-listbox__item">
+                            <div class="slds-media slds-listbox__option slds-listbox__option_entity"
+                                role="option"
+                                data-contactid={contact.Id}
+                                onclick={handleContactSelect}>
+                                <span class="slds-media__figure">
+                                    <lightning-icon
+                                        icon-name="standard:contact"
+                                        size="small">
+                                    </lightning-icon>
+                                </span>
+                                <span class="slds-media__body">
+                                    <span class="slds-listbox__option-text">{contact.Name}</span>
+                                    <span class="slds-listbox__option-meta">{contact.Email}</span>
+                                </span>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+            <div class="slds-m-top_medium hide-remove">
+                <lightning-pill-container 
+                    items={collaboratorPills}
+                    onitemremove={handleRemoveCollaborator}>
+                </lightning-pill-container>
+            </div>
+        </div>
+    </lightning-card>
+</template>

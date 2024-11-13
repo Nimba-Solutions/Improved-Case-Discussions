@@ -1,0 +1,11 @@
+<template>
+    <template if:true={wiredThreadsResult.data}>
+        <ul class="slds-has-dividers_bottom-space thread-list slds-m-right_medium">
+            <template for:each={wiredThreadsResult.data} for:item="thread">
+                <c-thread-item if:false={thread.IsArchived__c} key={thread.Id} thread={thread}
+                    onclick={handleThreadSelect} data-id={thread.Id}>
+                </c-thread-item>
+            </template>
+        </ul>
+    </template>
+</template>

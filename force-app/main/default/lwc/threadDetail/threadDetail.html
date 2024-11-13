@@ -1,0 +1,87 @@
+<template>
+    <div class="slds-m-right_medium">
+        <div class="comments-container slds-m-top_medium">
+            <template if:false={isArchived}>
+                <template if:true={threadId}>
+                    <div class="slds-grid slds-m-bottom_small">
+                        <div class="slds-col slds-text-align_right">
+                            <lightning-button label="Archive Thread" onclick={handleArchiveClick} variant="destructive-text"></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-12">
+                    <template if:true={threadId}>
+                        <lightning-button-icon 
+                            icon-name={sortIcon}
+                            alternative-text="Sort"
+                            title="Sort by date"
+                            onclick={handleSortChange}
+                        ></lightning-button-icon>
+                    </template>
+                </div>
+                <div class="slds-col slds-size_11-of-12">
+                    <template if:true={sortDirection}>
+                        <template if:true={isDescending}>
+                            <template if:false={isArchived}>
+                                <c-comment-editor 
+                                    thread-id={threadId} 
+                                    case-id={caseId}
+                                    parent-comment-id={selectedCommentId} 
+                                    oncommentadded={handleCommentAdded}
+                                    class="slds-m-bottom_medium"
+                                ></c-comment-editor>
+                            </template>
+                        </template>
+
+                        <template if:true={wiredCommentsResult.data}>
+                            <template for:each={sortedComments} for:item="comment">
+                                <c-comment-item 
+                                    key={comment.Id} 
+                                    comment={comment} 
+                                    onreply={handleReply}
+                                ></c-comment-item>
+                            </template>
+                        </template>
+
+                        <template if:false={isDescending}>
+                            <template if:false={isArchived}>
+                                <c-comment-editor 
+                                thread-id={threadId} 
+                                parent-comment-id={selectedCommentId} 
+                                oncommentadded={handleCommentAdded}
+                                class="slds-m-top_medium"
+                            ></c-comment-editor>
+                            </template>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Confirm Archive</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Archiving will close this discussion permanently. Any new comments will need to start in a fresh discussion.</p> 
+                    <br/>
+                    <p>Are you sure you want to continue?</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="destructive" label="Archive" onclick={handleArchive}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

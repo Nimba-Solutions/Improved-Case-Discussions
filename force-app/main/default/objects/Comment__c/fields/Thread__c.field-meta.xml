@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Thread__c</fullName>
+    <label>Thread</label>
+    <referenceTo>Thread__c</referenceTo>
+    <relationshipLabel>Comments</relationshipLabel>
+    <relationshipName>Comments</relationshipName>
+    <type>Lookup</type>
+</CustomField> 

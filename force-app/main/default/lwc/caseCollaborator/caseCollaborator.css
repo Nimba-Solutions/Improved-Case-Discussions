@@ -1,0 +1,4 @@
+lightning-pill-container div ul li:first-child lightning-button-icon.slds-pill__remove {
+    display: none !important;
+    pointer-events: none !important;
+}

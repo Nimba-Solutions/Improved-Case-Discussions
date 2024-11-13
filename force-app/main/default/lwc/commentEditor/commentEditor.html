@@ -1,0 +1,79 @@
+<template>
+    <form onsubmit={handleSubmit} class="slds-form">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-6">
+                <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-end">
+                    <div class="slds-grid slds-grid_vertical">
+                        <div class="slds-grid slds-grid_align-end">
+                            <lightning-avatar 
+                                src={userPhotoUrl}
+                                fallback-icon-name="standard:user"
+                                alternative-text={userName}
+                                class="slds-m-right_x-small"
+                                size="x-small">
+                            </lightning-avatar>
+                            <span class="slds-text-color_weak">{userName}</span>
+                        </div>
+                        <div class="slds-text-body_small slds-text-color_weak slds-text-align_right">
+                            Now
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-col slds-size_5-of-6">
+                <div class="slds-box slds-m-bottom_x-small">
+                    <div class="slds-form-element">
+                        <lightning-input-rich-text 
+                            value={commentBody}
+                            onchange={handleRichTextChange}
+                            label="Comment"
+                            required>
+                        </lightning-input-rich-text>
+                        
+                        <div if:true={showUserList} class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" style="position: absolute; width: 100%; z-index: 9002;">
+                            <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                                <template for:each={userResults} for:item="user">
+                                    <li key={user.Id} role="presentation" class="slds-listbox__item">
+                                        <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" 
+                                             role="option"
+                                             onclick={handleUserSelect}
+                                             data-userid={user.Id}
+                                             data-username={user.Name}>
+                                            <span class="slds-media__figure">
+                                                <lightning-avatar 
+                                                    src={user.SmallPhotoUrl}
+                                                    fallback-icon-name="standard:user"
+                                                    alternative-text={user.Name}
+                                                    size="x-small">
+                                                </lightning-avatar>
+                                            </span>
+                                            <span class="slds-media__body">
+                                                <span class="slds-truncate" title={user.Name}>{user.Name}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid slds-grid_align-spread slds-m-top_small">
+                        <lightning-input 
+                            type="checkbox" 
+                            checked={isInternal}
+                            onchange={handleInternalChange}
+                            label="Internal Only">
+                        </lightning-input>
+                        
+                        <lightning-button 
+                            type="submit" 
+                            label="Add Comment" 
+                            variant="brand">
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</template>

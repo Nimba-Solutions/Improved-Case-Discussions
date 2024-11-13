@@ -1,0 +1,38 @@
+<template>
+    <lightning-card>
+        <lightning-accordion allow-multiple-sections-open active-section-name="new-thread">
+            <template if:true={newThread}>
+                <lightning-accordion-section 
+                    name="new-thread"
+                    label="New Discussion">
+                    <div class="slds-col slds-size_3-of-3">
+                        <c-thread-detail 
+                            case-id={recordId}
+                            oncommentadded={handleCommentAdded}
+                            onthreadarchived={handleThreadArchived}>
+                        </c-thread-detail>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+            <template if:true={threads}>
+                <template if:true={hasThreads}>
+                    <template for:each={threads} for:item="thread">
+                        <lightning-accordion-section 
+                            key={thread.Id}
+                            name={thread.Id}
+                            label={thread.displayTitle}>
+                            <div class="slds-col slds-size_3-of-3">
+                                <c-thread-detail 
+                                    thread={thread}
+                                    case-id={recordId}
+                                    oncommentadded={handleCommentAdded}
+                                    onthreadarchived={handleThreadArchived}>
+                                </c-thread-detail>
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                </template>
+            </template>
+        </lightning-accordion>
+    </lightning-card>
+</template>
