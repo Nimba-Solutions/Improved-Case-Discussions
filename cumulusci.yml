@@ -1,0 +1,28 @@
+minimum_cumulusci_version: '3.78.0'
+project:
+    name: Improved-Case-Discussions
+    package:
+        name: Improved-Case-Discussions
+        api_version: '62.0'
+    git:
+        default_branch: 'main'
+        prefix_feature: 'feature/'
+        prefix_beta: 'beta/'
+        prefix_release: 'release/'
+    source_format: sfdx
+
+tasks:
+    robot:
+        options:
+            suites: robot/Improved-Case-Discussions/tests
+            options:
+                outputdir: robot/Improved-Case-Discussions/results
+
+    robot_testdoc:
+        options:
+            path: robot/Improved-Case-Discussions/tests
+            output: robot/Improved-Case-Discussions/doc/Improved-Case-Discussions_tests.html
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75
