@@ -33,13 +33,13 @@ This project aims to provide a lightweight improvement over Salesforce's standar
     - When a designated platform event is fired (to support custom logic).
     - 
 ### User Notifications
+![{1A8F24C4-E660-4633-9CE1-30576DB0EBB9}](https://github.com/user-attachments/assets/26926e01-5c65-4afb-917a-2e8b13abbbec)****
   - **In-App Notifications**
     - Notify users within the app.
   - **Email Notifications**
     - Notify users via email when new comments are added.
 
 ### User Mentions
-![{1A8F24C4-E660-4633-9CE1-30576DB0EBB9}](https://github.com/user-attachments/assets/26926e01-5c65-4afb-917a-2e8b13abbbec)****
   - Using `@mention` triggers the creation of a `CommentMention` record for reporting purposes.
 
 ### Platform Support
