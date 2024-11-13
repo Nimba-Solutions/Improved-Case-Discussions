@@ -2,8 +2,16 @@
 
 This project aims to provide a lightweight improvement over Salesforce's standard Case Comments.
 
-## Feature List
+## Development
 
+To work on this project in a scratch org:
+
+1. [Set up CumulusCI](https://cumulusci.readthedocs.io/en/latest/tutorial.html)
+2. Run `cci flow run dev_org --org dev` to deploy this project.
+3. Run `cci org browser dev` to open the org in your browser.
+
+
+## Feature List
 ### Full Rich Text Support
   - Includes file upload and preview.
 
@@ -31,7 +39,7 @@ This project aims to provide a lightweight improvement over Salesforce's standar
     - When a button is clicked.
     - On a schedule.
     - When a designated platform event is fired (to support custom logic).
-    - 
+      
 ### User Notifications
 ![{1A8F24C4-E660-4633-9CE1-30576DB0EBB9}](https://github.com/user-attachments/assets/26926e01-5c65-4afb-917a-2e8b13abbbec)****
   - **In-App Notifications**
@@ -52,10 +60,4 @@ This project aims to provide a lightweight improvement over Salesforce's standar
     - Respond directly to notifications to add comments via email.
 
 
-## Development
 
-To work on this project in a scratch org:
-
-1. [Set up CumulusCI](https://cumulusci.readthedocs.io/en/latest/tutorial.html)
-2. Run `cci flow run dev_org --org dev` to deploy this project.
-3. Run `cci org browser dev` to open the org in your browser.
