@@ -19,7 +19,8 @@ public with sharing class OpportunityTeamService {
                 UserId,
                 User.Name,
                 User.SmallPhotoUrl,
-                TeamMemberRole
+                TeamMemberRole,
+                OpportunityAccessLevel
             FROM OpportunityTeamMember 
             WHERE OpportunityId = :opportunityId
             WITH SECURITY_ENFORCED
@@ -33,16 +34,12 @@ public with sharing class OpportunityTeamService {
     }
     
     @AuraEnabled
-    public static void addTeamMember(Id opportunityId, Id userId, String teamRole) {
-        System.debug('opportunityId: ' + opportunityId);
-        System.debug('userId: ' + userId);
-        System.debug('teamRole: ' + teamRole);
-        
+    public static void addTeamMember(Id opportunityId, Id userId, String teamRole, String accessLevel) {
         OpportunityTeamMember member = new OpportunityTeamMember(
             OpportunityId = opportunityId,
             UserId = userId,
-            OpportunityAccessLevel = 'Read',  // Required field
-            TeamMemberRole = teamRole
+            TeamMemberRole = teamRole,
+            OpportunityAccessLevel = accessLevel
         );
         
         insert member;

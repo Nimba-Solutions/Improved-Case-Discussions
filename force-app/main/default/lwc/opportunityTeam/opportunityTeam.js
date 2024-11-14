@@ -14,6 +14,7 @@ export default class OpportunityTeam extends LightningElement {
     userResults = [];
     wiredTeamMembersResult;
     wiredRolesResult;
+    userAccessLevels = new Map();
 
     @wire(getTeamMembers, { opportunityId: '$recordId' })
     wiredTeamMembers(result) {
@@ -45,6 +46,39 @@ export default class OpportunityTeam extends LightningElement {
         }));
     }
 
+    connectedCallback() {
+        this.handleClickOutsideBound = this.handleClickOutside.bind(this);
+        this.handleKeyDownBound = this.handleKeyDown.bind(this);
+        document.addEventListener('click', this.handleClickOutsideBound);
+        document.addEventListener('keydown', this.handleKeyDownBound);
+    }
+
+    disconnectedCallback() {
+        document.removeEventListener('click', this.handleClickOutsideBound);
+        document.removeEventListener('keydown', this.handleKeyDownBound);
+    }
+
+    handleKeyDown(event) {
+        if (event.key === 'Escape') {
+            this.closeDropdown();
+        }
+    }
+
+    handleClickOutside(event) {
+        const dropdownContainer = this.template.querySelector('.dropdown-container');
+        const searchInput = this.template.querySelector('lightning-input');
+        
+        if (!dropdownContainer?.contains(event.target) && !searchInput?.contains(event.target)) {
+            this.closeDropdown();
+        }
+    }
+
+    closeDropdown() {
+        this.showUserList = false;
+        this.searchTerm = '';
+        this.userResults = [];
+    }
+
     handleSearchChange(event) {
         this.searchTerm = event.target.value;
         if (this.searchTerm.length >= 2) {
@@ -54,6 +88,11 @@ export default class OpportunityTeam extends LightningElement {
             this.showUserList = false;
             this.userResults = [];
         }
+    }
+
+    handleAccessChange(event) {
+        const userId = event.target.dataset.userid;
+        this.userAccessLevels.set(userId, event.target.checked ? 'Edit' : 'Read');
     }
 
     async searchUsers() {
@@ -67,15 +106,38 @@ export default class OpportunityTeam extends LightningElement {
 
     async handleRoleSelect(event) {
         const userId = event.currentTarget.dataset.userid;
-        const teamRole = event.currentTarget.dataset.role; // Changed from data-roleid to data-role
-        
-        console.log('Selected role:', teamRole); // Debug log
+        const teamRole = event.currentTarget.dataset.role;
+        const accessLevel = this.userAccessLevels.get(userId) || 'Read';
+
+        if (this.teamMembers.length >= 2) {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Maximum team members limit reached (2)',
+                    variant: 'error'
+                })
+            );
+            return;
+        }
+
+        const existingRole = this.teamMembers.find(member => member.TeamMemberRole === teamRole);
+        if (existingRole) {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'This role is already assigned to another team member',
+                    variant: 'error'
+                })
+            );
+            return;
+        }
         
         try {
             await addTeamMember({ 
                 opportunityId: this.recordId, 
                 userId: userId,
-                teamRole: teamRole
+                teamRole: teamRole,
+                accessLevel: accessLevel
             });
             
             this.dispatchEvent(
@@ -90,6 +152,7 @@ export default class OpportunityTeam extends LightningElement {
             this.showUserList = false;
             this.searchTerm = '';
             this.userResults = [];
+            this.userAccessLevels.clear();
             
         } catch (error) {
             console.error('Error adding team member:', error);

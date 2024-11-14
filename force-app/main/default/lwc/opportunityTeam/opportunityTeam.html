@@ -8,7 +8,7 @@
                 onchange={handleSearchChange}
                 placeholder="Search users to add to opportunity team..."
             ></lightning-input>
-            <div class="dropdown-container"> 
+            <div class="dropdown-container" tabindex="0"> 
                 <div if:true={showUserList} class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
                     <ul class="slds-listbox slds-listbox_vertical">
                         <template for:each={userResults} for:item="user">
@@ -25,6 +25,13 @@
                                     <span class="slds-media__body">
                                         <span class="slds-listbox__option-text">{user.Name}</span>
                                         <div class="role-buttons">
+                                            <lightning-input 
+                                                type="checkbox"
+                                                label="Edit Access"
+                                                data-userid={user.Id}
+                                                onchange={handleAccessChange}
+                                                class="access-checkbox">
+                                            </lightning-input>
                                             <template for:each={roles} for:item="role">
                                                 <lightning-button 
                                                     key={role.Id}
@@ -44,7 +51,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="slds-m-top_medium">
                 <lightning-pill-container items={teamMemberPills} onitemremove={handleRemoveTeamMember}></lightning-pill-container>
             </div>
